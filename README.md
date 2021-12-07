@@ -4,3 +4,8 @@
 
 - day 1: np.conv
 - day 4: bingo, numpy masks and sums. could be adapted for cuda
+
+
+## 
+possible inputs for cuda-implementations
+https://the-tk.com/project/aoc2021-bigboys.html
