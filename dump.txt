@@ -1,0 +1,441 @@
+================================================================================
+-------------------------------OPTIMIZED DUMP nrt-------------------------------
+; ModuleID = 'nrt'
+source_filename = "<string>"
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-unknown-linux-gnu"
+
+@.const.picklebuf.140611889277504 = internal constant { i8*, i32, i8* } { i8* getelementptr inbounds ([102 x i8], [102 x i8]* @.const.pickledata.140611889277504, i32 0, i32 0), i32 102, i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.const.pickledata.140611889277504.sha1, i32 0, i32 0) }
+@.const.pickledata.140611889277504 = internal constant [102 x i8] c"\80\04\95[\00\00\00\00\00\00\00\8C\08builtins\94\8C\0CRuntimeError\94\93\94\8C6numba jitted function aborted due to unresolved symbol\94\85\94N\87\94."
+@.const.pickledata.140611889277504.sha1 = internal constant [20 x i8] c"\97\BE\DC\DF\EC\8E\80\B7\09>P\CE%\EDV\F7r\0E\0C\9C"
+
+; Function Attrs: nofree norecurse nounwind
+define i64 @nrt_atomic_add(i64* nocapture %.1) local_unnamed_addr #0 {
+.3:
+  %.4 = atomicrmw add i64* %.1, i64 1 monotonic
+  %.5 = add i64 %.4, 1
+  ret i64 %.5
+}
+
+; Function Attrs: nofree norecurse nounwind
+define i64 @nrt_atomic_sub(i64* nocapture %.1) local_unnamed_addr #0 {
+.3:
+  %.4 = atomicrmw sub i64* %.1, i64 1 monotonic
+  %.5 = add i64 %.4, -1
+  ret i64 %.5
+}
+
+; Function Attrs: nofree norecurse nounwind
+define i32 @nrt_atomic_cas(i64* nocapture %.1, i64 %.2, i64 %.3, i64* nocapture %.4) local_unnamed_addr #0 {
+.6:
+  %.7 = cmpxchg i64* %.1, i64 %.2, i64 %.3 monotonic monotonic
+  %.8 = extractvalue { i64, i1 } %.7, 0
+  %.9 = extractvalue { i64, i1 } %.7, 1
+  store i64 %.8, i64* %.4, align 8
+  %.11 = zext i1 %.9 to i32
+  ret i32 %.11
+}
+
+; Function Attrs: norecurse nounwind readonly
+define i8* @NRT_MemInfo_data_fast(i8* nocapture readonly %.1) local_unnamed_addr #1 {
+.3:
+  %.5 = getelementptr i8, i8* %.1, i64 24
+  %0 = bitcast i8* %.5 to i8**
+  %.6 = load i8*, i8** %0, align 8
+  ret i8* %.6
+}
+
+; Function Attrs: nofree noinline norecurse nounwind
+define void @NRT_incref(i8* %.1) local_unnamed_addr #2 {
+.3:
+  %.4 = icmp eq i8* %.1, null
+  br i1 %.4, label %.3.if, label %.3.endif, !prof !0
+
+.3.if:                                            ; preds = %.3
+  ret void
+
+.3.endif:                                         ; preds = %.3
+  %.7 = bitcast i8* %.1 to i64*
+  %.4.i = atomicrmw add i64* %.7, i64 1 monotonic
+  ret void
+}
+
+; Function Attrs: noinline
+define void @NRT_decref(i8* %.1) local_unnamed_addr #3 {
+.3:
+  %.4 = icmp eq i8* %.1, null
+  br i1 %.4, label %.3.if, label %.3.endif, !prof !0
+
+.3.if:                                            ; preds = %.3.endif, %.3
+  ret void
+
+.3.endif:                                         ; preds = %.3
+  fence release
+  %.8 = bitcast i8* %.1 to i64*
+  %.4.i = atomicrmw sub i64* %.8, i64 1 monotonic
+  %.10 = icmp eq i64 %.4.i, 1
+  br i1 %.10, label %.3.endif.if, label %.3.if, !prof !0
+
+.3.endif.if:                                      ; preds = %.3.endif
+  fence acquire
+  tail call void @NRT_MemInfo_call_dtor(i8* nonnull %.1)
+  ret void
+}
+
+declare void @NRT_MemInfo_call_dtor(i8*) local_unnamed_addr
+
+; Function Attrs: nofree norecurse nounwind writeonly
+define i32 @nrt_unresolved_abort(i8** nocapture readnone %.1, { i8*, i32, i8* }** nocapture %.2) local_unnamed_addr #4 {
+.4:
+  store { i8*, i32, i8* }* @.const.picklebuf.140611889277504, { i8*, i32, i8* }** %.2, align 8
+  ret i32 1, !ret_is_raise !1
+}
+
+; Function Attrs: nounwind
+declare void @llvm.stackprotector(i8*, i8**) #5
+
+attributes #0 = { nofree norecurse nounwind }
+attributes #1 = { norecurse nounwind readonly }
+attributes #2 = { nofree noinline norecurse nounwind }
+attributes #3 = { noinline }
+attributes #4 = { nofree norecurse nounwind writeonly }
+attributes #5 = { nounwind }
+
+!0 = !{!"branch_weights", i32 1, i32 99}
+!1 = !{i1 true}
+
+================================================================================
+================================================================================
+-----------------------------OPTIMIZED DUMP calc_x------------------------------
+; ModuleID = 'calc_x'
+source_filename = "<string>"
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-unknown-linux-gnu"
+
+@"_ZN08NumbaEnv8__main__10calc_x$241E" = common local_unnamed_addr global i8* null
+@.const.picklebuf.140611868718720 = internal constant { i8*, i32, i8* } { i8* getelementptr inbounds ([67 x i8], [67 x i8]* @.const.pickledata.140611868718720, i32 0, i32 0), i32 67, i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.const.pickledata.140611868718720.sha1, i32 0, i32 0) }
+@.const.pickledata.140611868718720 = internal constant [67 x i8] c"\80\04\958\00\00\00\00\00\00\00\8C\08builtins\94\8C\0BMemoryError\94\93\94\8C\14cannot allocate list\94\85\94N\87\94."
+@.const.pickledata.140611868718720.sha1 = internal constant [20 x i8] c"+\98\F4\13f\88\DD\D3\C0)\127\06\86\F1\A0\011(\0C"
+@.const.calc_x = internal constant [7 x i8] c"calc_x\00"
+@PyExc_RuntimeError = external global i8
+@".const.missing Environment: _ZN08NumbaEnv8__main__10calc_x$241E" = internal constant [57 x i8] c"missing Environment: _ZN08NumbaEnv8__main__10calc_x$241E\00"
+@PyExc_SystemError = external global i8
+@".const.unknown error when calling native function" = internal constant [43 x i8] c"unknown error when calling native function\00"
+@".const.<numba.core.cpu.CPUContext object at 0x7fe2c0856730>" = internal constant [53 x i8] c"<numba.core.cpu.CPUContext object at 0x7fe2c0856730>\00"
+@".const.unknown error when calling native function.1" = internal constant [43 x i8] c"unknown error when calling native function\00"
+
+define i32 @"_ZN8__main__10calc_x$241E"(i64* noalias nocapture %retptr, { i8*, i32, i8* }** noalias nocapture %excinfo) local_unnamed_addr {
+entry:
+  %.23 = tail call i8* @NRT_MemInfo_new_varsize_dtor(i64 40, i8* bitcast (void (i8*)* @.dtor.list.int64 to i8*))
+  %.24 = icmp eq i8* %.23, null
+  br i1 %.24, label %B0.endif.endif.if, label %B0.endif.endif.endif, !prof !0
+
+B14:                                              ; preds = %B14.preheader, %B14
+  %temp.2.17.2.046 = phi i64 [ %.208, %B14 ], [ %temp.2.17.2.046.ph, %B14.preheader ]
+  %.133.045 = phi i64 [ %.182, %B14 ], [ %.133.045.ph, %B14.preheader ]
+  %sunkaddr = mul i64 %.133.045, 8
+  %0 = bitcast { i64, i64, i8, i64 }* %.6.i3341 to i8*
+  %sunkaddr78 = getelementptr i8, i8* %0, i64 %sunkaddr
+  %sunkaddr79 = getelementptr i8, i8* %sunkaddr78, i64 24
+  %1 = bitcast i8* %sunkaddr79 to i64*
+  %.179 = load i64, i64* %1, align 8
+  %.182 = add nuw nsw i64 %.133.045, 1
+  %.208 = mul nsw i64 %.179, %temp.2.17.2.046
+  %exitcond.not = icmp eq i64 %.16843, %.182
+  br i1 %exitcond.not, label %B26, label %B14, !llvm.loop !1
+
+B26:                                              ; preds = %B14, %middle.block, %B0.endif.endif.endif
+  %temp.2.17.2.0.lcssa = phi i64 [ 1, %B0.endif.endif.endif ], [ %16, %middle.block ], [ %.208, %B14 ]
+  tail call void @NRT_decref(i8* nonnull %.23)
+  store i64 %temp.2.17.2.0.lcssa, i64* %retptr, align 8
+  ret i32 0
+
+B0.endif.endif.if:                                ; preds = %entry
+  store { i8*, i32, i8* }* @.const.picklebuf.140611868718720, { i8*, i32, i8* }** %excinfo, align 8
+  ret i32 1, !ret_is_raise !4
+
+B0.endif.endif.endif:                             ; preds = %entry
+  %.5.i23 = getelementptr i8, i8* %.23, i64 24
+  %2 = bitcast i8* %.5.i23 to { i64, i64, i8, i64 }**
+  %.6.i2425 = load { i64, i64, i8, i64 }*, { i64, i64, i8, i64 }** %2, align 8
+  %.36 = getelementptr inbounds { i64, i64, i8, i64 }, { i64, i64, i8, i64 }* %.6.i2425, i64 0, i32 1
+  store i64 2, i64* %.36, align 8
+  %.6.i2226 = load { i64, i64, i8, i64 }*, { i64, i64, i8, i64 }** %2, align 8
+  %.4280 = bitcast { i64, i64, i8, i64 }* %.6.i2226 to i64*
+  store i64 0, i64* %.4280, align 8
+  %.6.i2027 = load { i64, i64, i8, i64 }*, { i64, i64, i8, i64 }** %2, align 8
+  %.48 = getelementptr inbounds { i64, i64, i8, i64 }, { i64, i64, i8, i64 }* %.6.i2027, i64 0, i32 2
+  store i8 0, i8* %.48, align 1
+  %.6.i1628 = load { i64, i64, i8, i64 }*, { i64, i64, i8, i64 }** %2, align 8
+  %.61 = getelementptr inbounds { i64, i64, i8, i64 }, { i64, i64, i8, i64 }* %.6.i1628, i64 0, i32 3
+  %.72 = bitcast i64* %.61 to i8*
+  tail call void @llvm.memset.p0i8.i64(i8* nonnull align 1 dereferenceable(16) %.72, i8 0, i64 16, i1 false)
+  %.6.i1230 = load { i64, i64, i8, i64 }*, { i64, i64, i8, i64 }** %2, align 8
+  %.9081 = bitcast { i64, i64, i8, i64 }* %.6.i1230 to i64*
+  store i64 2, i64* %.9081, align 8
+  %.6.i831 = load { i64, i64, i8, i64 }*, { i64, i64, i8, i64 }** %2, align 8
+  %.103 = getelementptr inbounds { i64, i64, i8, i64 }, { i64, i64, i8, i64 }* %.6.i831, i64 0, i32 3
+  store i64 5, i64* %.103, align 8
+  %.6.i432 = load { i64, i64, i8, i64 }*, { i64, i64, i8, i64 }** %2, align 8
+  %.117 = getelementptr inbounds { i64, i64, i8, i64 }, { i64, i64, i8, i64 }* %.6.i432, i64 0, i32 3
+  %.118 = getelementptr i64, i64* %.117, i64 1
+  store i64 7, i64* %.118, align 8
+  %.6.i3341 = load { i64, i64, i8, i64 }*, { i64, i64, i8, i64 }** %2, align 8
+  %.1674282 = bitcast { i64, i64, i8, i64 }* %.6.i3341 to i64*
+  %.16843 = load i64, i64* %.1674282, align 8
+  %.16944 = icmp sgt i64 %.16843, 0
+  br i1 %.16944, label %B14.lr.ph, label %B26
+
+B14.lr.ph:                                        ; preds = %B0.endif.endif.endif
+  %min.iters.check = icmp ult i64 %.16843, 16
+  br i1 %min.iters.check, label %B14.preheader, label %vector.ph
+
+B14.preheader:                                    ; preds = %middle.block, %B14.lr.ph
+  %temp.2.17.2.046.ph = phi i64 [ 1, %B14.lr.ph ], [ %16, %middle.block ]
+  %.133.045.ph = phi i64 [ 0, %B14.lr.ph ], [ %n.vec, %middle.block ]
+  br label %B14
+
+vector.ph:                                        ; preds = %B14.lr.ph
+  %n.vec = and i64 %.16843, -16
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ]
+  %vec.phi = phi <4 x i64> [ <i64 1, i64 1, i64 1, i64 1>, %vector.ph ], [ %11, %vector.body ]
+  %vec.phi48 = phi <4 x i64> [ <i64 1, i64 1, i64 1, i64 1>, %vector.ph ], [ %12, %vector.body ]
+  %vec.phi49 = phi <4 x i64> [ <i64 1, i64 1, i64 1, i64 1>, %vector.ph ], [ %13, %vector.body ]
+  %vec.phi50 = phi <4 x i64> [ <i64 1, i64 1, i64 1, i64 1>, %vector.ph ], [ %14, %vector.body ]
+  %sunkaddr83 = mul i64 %index, 8
+  %3 = bitcast { i64, i64, i8, i64 }* %.6.i3341 to i8*
+  %sunkaddr84 = getelementptr i8, i8* %3, i64 %sunkaddr83
+  %sunkaddr85 = getelementptr i8, i8* %sunkaddr84, i64 24
+  %4 = bitcast i8* %sunkaddr85 to <4 x i64>*
+  %wide.load = load <4 x i64>, <4 x i64>* %4, align 8
+  %sunkaddr86 = mul i64 %index, 8
+  %5 = bitcast { i64, i64, i8, i64 }* %.6.i3341 to i8*
+  %sunkaddr87 = getelementptr i8, i8* %5, i64 %sunkaddr86
+  %sunkaddr88 = getelementptr i8, i8* %sunkaddr87, i64 56
+  %6 = bitcast i8* %sunkaddr88 to <4 x i64>*
+  %wide.load51 = load <4 x i64>, <4 x i64>* %6, align 8
+  %sunkaddr89 = mul i64 %index, 8
+  %7 = bitcast { i64, i64, i8, i64 }* %.6.i3341 to i8*
+  %sunkaddr90 = getelementptr i8, i8* %7, i64 %sunkaddr89
+  %sunkaddr91 = getelementptr i8, i8* %sunkaddr90, i64 88
+  %8 = bitcast i8* %sunkaddr91 to <4 x i64>*
+  %wide.load52 = load <4 x i64>, <4 x i64>* %8, align 8
+  %sunkaddr92 = mul i64 %index, 8
+  %9 = bitcast { i64, i64, i8, i64 }* %.6.i3341 to i8*
+  %sunkaddr93 = getelementptr i8, i8* %9, i64 %sunkaddr92
+  %sunkaddr94 = getelementptr i8, i8* %sunkaddr93, i64 120
+  %10 = bitcast i8* %sunkaddr94 to <4 x i64>*
+  %wide.load53 = load <4 x i64>, <4 x i64>* %10, align 8
+  %11 = mul <4 x i64> %wide.load, %vec.phi
+  %12 = mul <4 x i64> %wide.load51, %vec.phi48
+  %13 = mul <4 x i64> %wide.load52, %vec.phi49
+  %14 = mul <4 x i64> %wide.load53, %vec.phi50
+  %index.next = add i64 %index, 16
+  %15 = icmp eq i64 %n.vec, %index.next
+  br i1 %15, label %middle.block, label %vector.body, !llvm.loop !5
+
+middle.block:                                     ; preds = %vector.body
+  %bin.rdx = mul <4 x i64> %12, %11
+  %bin.rdx54 = mul <4 x i64> %13, %bin.rdx
+  %bin.rdx55 = mul <4 x i64> %14, %bin.rdx54
+  %rdx.shuf = shufflevector <4 x i64> %bin.rdx55, <4 x i64> undef, <4 x i32> <i32 2, i32 3, i32 undef, i32 undef>
+  %bin.rdx75 = mul <4 x i64> %bin.rdx55, %rdx.shuf
+  %rdx.shuf76 = shufflevector <4 x i64> %bin.rdx75, <4 x i64> undef, <4 x i32> <i32 1, i32 undef, i32 undef, i32 undef>
+  %bin.rdx77 = mul <4 x i64> %bin.rdx75, %rdx.shuf76
+  %16 = extractelement <4 x i64> %bin.rdx77, i32 0
+  %cmp.n = icmp eq i64 %.16843, %n.vec
+  br i1 %cmp.n, label %B26, label %B14.preheader
+}
+
+define linkonce_odr void @.dtor.list.int64(i8* %.1) {
+.3:
+  ret void
+}
+
+declare i8* @NRT_MemInfo_new_varsize_dtor(i64, i8*) local_unnamed_addr
+
+; Function Attrs: argmemonly nounwind willreturn writeonly
+declare void @llvm.memset.p0i8.i64(i8* nocapture writeonly, i8, i64, i1 immarg) #0
+
+define i8* @"_ZN7cpython8__main__10calc_x$241E"(i8* nocapture readnone %py_closure, i8* %py_args, i8* nocapture readnone %py_kws) local_unnamed_addr {
+entry:
+  %.5 = tail call i32 (i8*, i8*, i64, i64, ...) @PyArg_UnpackTuple(i8* %py_args, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.const.calc_x, i64 0, i64 0), i64 0, i64 0)
+  %.6 = icmp eq i32 %.5, 0
+  %.20 = alloca i64, align 8
+  store i64 0, i64* %.20, align 8
+  %excinfo = alloca { i8*, i32, i8* }*, align 8
+  store { i8*, i32, i8* }* null, { i8*, i32, i8* }** %excinfo, align 8
+  br i1 %.6, label %entry.if, label %entry.endif, !prof !0
+
+entry.if:                                         ; preds = %entry.endif.endif.endif.if, %entry.endif.endif.endif.if.if, %entry.endif.endif.endif.endif.endif.endif, %entry
+  ret i8* null
+
+entry.endif:                                      ; preds = %entry
+  %.10 = load i8*, i8** @"_ZN08NumbaEnv8__main__10calc_x$241E", align 8
+  %.15 = icmp eq i8* %.10, null
+  br i1 %.15, label %entry.endif.if, label %entry.endif.endif, !prof !0
+
+entry.endif.if:                                   ; preds = %entry.endif
+  tail call void @PyErr_SetString(i8* nonnull @PyExc_RuntimeError, i8* getelementptr inbounds ([57 x i8], [57 x i8]* @".const.missing Environment: _ZN08NumbaEnv8__main__10calc_x$241E", i64 0, i64 0))
+  ret i8* null
+
+entry.endif.endif:                                ; preds = %entry.endif
+  %.19 = tail call i8* @PyEval_SaveThread()
+  store i64 0, i64* %.20, align 8
+  %.24 = call i32 @"_ZN8__main__10calc_x$241E"(i64* nonnull %.20, { i8*, i32, i8* }** nonnull %excinfo) #1
+  %.25 = load { i8*, i32, i8* }*, { i8*, i32, i8* }** %excinfo, align 8
+  %.34 = load i64, i64* %.20, align 8
+  tail call void @PyEval_RestoreThread(i8* %.19)
+  switch i32 %.24, label %entry.endif.endif.endif [
+    i32 -2, label %entry.endif.endif.if.endif
+    i32 0, label %entry.endif.endif.if.endif
+  ]
+
+entry.endif.endif.endif:                          ; preds = %entry.endif.endif
+  %.32 = icmp sgt i32 %.24, 0
+  br i1 %.32, label %entry.endif.endif.endif.if, label %entry.endif.endif.endif.endif.endif.endif
+
+entry.endif.endif.if.endif:                       ; preds = %entry.endif.endif, %entry.endif.endif
+  %.42 = tail call i8* @PyLong_FromLongLong(i64 %.34)
+  ret i8* %.42
+
+entry.endif.endif.endif.if:                       ; preds = %entry.endif.endif.endif
+  tail call void @PyErr_Clear()
+  %.49 = load { i8*, i32, i8* }, { i8*, i32, i8* }* %.25, align 8
+  %.50 = extractvalue { i8*, i32, i8* } %.49, 0
+  %.52 = extractvalue { i8*, i32, i8* } %.49, 1
+  %.54 = extractvalue { i8*, i32, i8* } %.49, 2
+  %.55 = tail call i8* @numba_unpickle(i8* %.50, i32 %.52, i8* %.54)
+  %.56.not = icmp eq i8* %.55, null
+  br i1 %.56.not, label %entry.if, label %entry.endif.endif.endif.if.if, !prof !0
+
+entry.endif.endif.endif.if.if:                    ; preds = %entry.endif.endif.endif.if
+  tail call void @numba_do_raise(i8* nonnull %.55)
+  br label %entry.if
+
+entry.endif.endif.endif.endif.endif.endif:        ; preds = %entry.endif.endif.endif
+  tail call void @PyErr_SetString(i8* nonnull @PyExc_SystemError, i8* getelementptr inbounds ([43 x i8], [43 x i8]* @".const.unknown error when calling native function", i64 0, i64 0))
+  br label %entry.if
+}
+
+declare i32 @PyArg_UnpackTuple(i8*, i8*, i64, i64, ...) local_unnamed_addr
+
+declare void @PyErr_SetString(i8*, i8*) local_unnamed_addr
+
+declare i8* @PyEval_SaveThread() local_unnamed_addr
+
+declare void @PyEval_RestoreThread(i8*) local_unnamed_addr
+
+declare i8* @PyLong_FromLongLong(i64) local_unnamed_addr
+
+declare void @PyErr_Clear() local_unnamed_addr
+
+declare i8* @numba_unpickle(i8*, i32, i8*) local_unnamed_addr
+
+declare void @numba_do_raise(i8*) local_unnamed_addr
+
+define i64 @"cfunc._ZN8__main__10calc_x$241E"() local_unnamed_addr {
+entry:
+  %.2 = alloca i64, align 8
+  store i64 0, i64* %.2, align 8
+  %excinfo = alloca { i8*, i32, i8* }*, align 8
+  store { i8*, i32, i8* }* null, { i8*, i32, i8* }** %excinfo, align 8
+  %.6 = call i32 @"_ZN8__main__10calc_x$241E"(i64* nonnull %.2, { i8*, i32, i8* }** nonnull %excinfo) #1
+  %.7 = load { i8*, i32, i8* }*, { i8*, i32, i8* }** %excinfo, align 8
+  %.8.not = icmp eq i32 %.6, 0
+  %.16 = load i64, i64* %.2, align 8
+  %.18 = alloca i32, align 4
+  store i32 0, i32* %.18, align 4
+  br i1 %.8.not, label %entry.endif, label %entry.if, !prof !6
+
+entry.if:                                         ; preds = %entry
+  %.14 = icmp sgt i32 %.6, 0
+  call void @numba_gil_ensure(i32* nonnull %.18)
+  br i1 %.14, label %entry.if.if, label %entry.if.endif.endif.endif
+
+entry.endif:                                      ; preds = %entry, %.21
+  ret i64 %.16
+
+.21:                                              ; preds = %entry.if.if, %entry.if.if.if, %entry.if.endif.endif.endif
+  %.43 = call i8* @PyUnicode_FromString(i8* getelementptr inbounds ([53 x i8], [53 x i8]* @".const.<numba.core.cpu.CPUContext object at 0x7fe2c0856730>", i64 0, i64 0))
+  call void @PyErr_WriteUnraisable(i8* %.43)
+  call void @Py_DecRef(i8* %.43)
+  call void @numba_gil_release(i32* nonnull %.18)
+  br label %entry.endif
+
+entry.if.if:                                      ; preds = %entry.if
+  call void @PyErr_Clear()
+  %.24 = load { i8*, i32, i8* }, { i8*, i32, i8* }* %.7, align 8
+  %.25 = extractvalue { i8*, i32, i8* } %.24, 0
+  %.27 = extractvalue { i8*, i32, i8* } %.24, 1
+  %.29 = extractvalue { i8*, i32, i8* } %.24, 2
+  %.30 = call i8* @numba_unpickle(i8* %.25, i32 %.27, i8* %.29)
+  %.31.not = icmp eq i8* %.30, null
+  br i1 %.31.not, label %.21, label %entry.if.if.if, !prof !0
+
+entry.if.if.if:                                   ; preds = %entry.if.if
+  call void @numba_do_raise(i8* nonnull %.30)
+  br label %.21
+
+entry.if.endif.endif.endif:                       ; preds = %entry.if
+  call void @PyErr_SetString(i8* nonnull @PyExc_SystemError, i8* getelementptr inbounds ([43 x i8], [43 x i8]* @".const.unknown error when calling native function.1", i64 0, i64 0))
+  br label %.21
+}
+
+declare void @numba_gil_ensure(i32*) local_unnamed_addr
+
+declare i8* @PyUnicode_FromString(i8*) local_unnamed_addr
+
+declare void @PyErr_WriteUnraisable(i8*) local_unnamed_addr
+
+declare void @Py_DecRef(i8*) local_unnamed_addr
+
+declare void @numba_gil_release(i32*) local_unnamed_addr
+
+; Function Attrs: noinline
+define linkonce_odr void @NRT_decref(i8* %.1) local_unnamed_addr #1 {
+.3:
+  %.4 = icmp eq i8* %.1, null
+  br i1 %.4, label %.3.if, label %.3.endif, !prof !0
+
+.3.if:                                            ; preds = %.3.endif, %.3
+  ret void
+
+.3.endif:                                         ; preds = %.3
+  fence release
+  %.8 = bitcast i8* %.1 to i64*
+  %.4.i = atomicrmw sub i64* %.8, i64 1 monotonic
+  %.10 = icmp eq i64 %.4.i, 1
+  br i1 %.10, label %.3.endif.if, label %.3.if, !prof !0
+
+.3.endif.if:                                      ; preds = %.3.endif
+  fence acquire
+  tail call void @NRT_MemInfo_call_dtor(i8* nonnull %.1)
+  ret void
+}
+
+declare void @NRT_MemInfo_call_dtor(i8*) local_unnamed_addr
+
+; Function Attrs: nounwind readnone willreturn
+declare i64 @llvm.experimental.vector.reduce.mul.v4i64(<4 x i64>) #2
+
+; Function Attrs: nounwind
+declare void @llvm.stackprotector(i8*, i8**) #3
+
+attributes #0 = { argmemonly nounwind willreturn writeonly }
+attributes #1 = { noinline }
+attributes #2 = { nounwind readnone willreturn }
+attributes #3 = { nounwind }
+
+!0 = !{!"branch_weights", i32 1, i32 99}
+!1 = distinct !{!1, !2, !3}
+!2 = !{!"llvm.loop.unroll.runtime.disable"}
+!3 = !{!"llvm.loop.isvectorized", i32 1}
+!4 = !{i1 true}
+!5 = distinct !{!5, !3}
+!6 = !{!"branch_weights", i32 99, i32 1}
+
+================================================================================

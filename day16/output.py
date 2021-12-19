@@ -1,8 +1,15 @@
-import math
+import numba
 
 
-x = sum([min([max([min([min([min([min([math.prod([max([max([max([min([math.prod([math.prod([min([min([math.prod([max([math.prod([sum([min([1736671104])])])])])])])])])])])])])])])])])])])]), 4, max([522179]), math.prod([19219, 1 if 38942 < 247596226 else 0]), sum([math.prod([7, 8, 14]), math.prod([8, 2, 12]), math.prod([4, 10, 3])]), 131, math.prod([1 if 17052 < 2979 else 0, 46058]), sum([664609]), math.prod([1 if 2159 > 2159 else 0, 580431]), math.prod([13, 200, 84, 116]), 15, math.prod([80]), math.prod([95, 1 if 2 < 16651 else 0]), math.prod([8599772, 1 if sum([10, 14, 2]) < sum([8, 9, 11]) else 0]), 14698, min([6, 176724, 17, 218]), math.prod([1 if 2951 > 61 else 0, 30979330271]), math.prod([1 if sum([5, 2, 6]) > sum([9, 12, 2]) else 0, 35056]), max([21, 8, 10464633, 21766]), math.prod([95, 161]), math.prod([1 if 28 > 28 else 0, 1176227742]), math.prod([102, 1 if sum([2, 4, 11]) > sum([10, 15, 10]) else 0]), min([246, 1554]), math.prod([1 if 1470 == 6827177 else 0, 208]), min(
-    [728, 763810927, 55700720745]), math.prod([1 if 5916415 > 2489 else 0, 289600]), math.prod([230, 92, 120, 220, 159]), math.prod([1 if sum([11, 5, 11]) == sum([15, 14, 10]) else 0, 49769]), min([1466502782]), max([1589, 214, 13]), math.prod([1 if 170605153 < 170605153 else 0, 198398]), 18956, math.prod([196905722, 1 if 112 == 112 else 0]), sum([4217206544, 48993801750, 25736, 3879782983]), math.prod([sum([2, 15, 4]), sum([4, 15, 11]), sum([7, 15, 9])]), 211, math.prod([1 if 16 > 63733 else 0, 44586]), sum([14, 1]), max([3511, 10]), max([12718799, 171629, 9, 264022477, 98]), math.prod([535767221581, 1 if sum([12, 10, 11]) < sum([11, 2, 9]) else 0]), min([391364, 3067700, 611, 2388317100, 141]), math.prod([1 if 237 < 237 else 0, 3462]), math.prod([139, 53, 151]), 7, sum([12998225, 689, 2007, 5, 826]), 547, math.prod([193, 1 if 1458 < 138 else 0]), math.prod([1 if 277997 == 12 else 0, 37675211133]), 11, math.prod([1 if 955 > 2610 else 0, 67374456587]), sum([886515, 86, 254]), 3])
+@numba.jit(nopython=True,nogil=True)
+def calc_x():
+    def prod(x:list):
+        temp = 1
+        for i in x:
+            temp *= i
+        return temp
+    x = sum([min([max([min([min([min([min([prod([max([max([max([min([prod([prod([min([min([prod([max([prod([sum([min([1736671104])])])])])])])])])])])])])])])])])])])]), 4, max([522179]), prod([19219, 1 if 38942 < 247596226 else 0]), sum([prod([7, 8, 14]), prod([8, 2, 12]), prod([4, 10, 3])]), 131, prod([1 if 17052 < 2979 else 0, 46058]), sum([664609]), prod([1 if 2159 > 2159 else 0, 580431]), prod([13, 200, 84, 116]), 15, prod([80]), prod([95, 1 if 2 < 16651 else 0]), prod([8599772, 1 if sum([10, 14, 2]) < sum([8, 9, 11]) else 0]), 14698, min([6, 176724, 17, 218]), prod([1 if 2951 > 61 else 0, 30979330271]), prod([1 if sum([5, 2, 6]) > sum([9, 12, 2]) else 0, 35056]), max([21, 8, 10464633, 21766]), prod([95, 161]), prod([1 if 28 > 28 else 0, 1176227742]), prod([102, 1 if sum([2, 4, 11]) > sum([10, 15, 10]) else 0]), min([246, 1554]), prod([1 if 1470 == 6827177 else 0, 208]), min([728, 763810927, 55700720745]), prod([1 if 5916415 > 2489 else 0, 289600]), prod([230, 92, 120, 220, 159]), prod([1 if sum([11, 5, 11]) == sum([15, 14, 10]) else 0, 49769]), min([1466502782]), max([1589, 214, 13]), prod([1 if 170605153 < 170605153 else 0, 198398]), 18956, prod([196905722, 1 if 112 == 112 else 0]), sum([4217206544, 48993801750, 25736, 3879782983]), prod([sum([2, 15, 4]), sum([4, 15, 11]), sum([7, 15, 9])]), 211, prod([1 if 16 > 63733 else 0, 44586]), sum([14, 1]), max([3511, 10]), max([12718799, 171629, 9, 264022477, 98]), prod([535767221581, 1 if sum([12, 10, 11]) < sum([11, 2, 9]) else 0]), min([391364, 3067700, 611, 2388317100, 141]), prod([1 if 237 < 237 else 0, 3462]), prod([139, 53, 151]), 7, sum([12998225, 689, 2007, 5, 826]), 547, prod([193, 1 if 1458 < 138 else 0]), prod([1 if 277997 == 12 else 0, 37675211133]), 11, prod([1 if 955 > 2610 else 0, 67374456587]), sum([886515, 86, 254]), 3])
+    #x = prod([5,7])
+    return x
 
-
-print(x)
+calc_x()
